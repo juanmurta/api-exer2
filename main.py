@@ -7,13 +7,11 @@ link = "https://olinda.bcb.gov.br/olinda/servico/mecir_dinheiro_em_circulacao/ve
 requisicao = requests.get(link)
 informacoes = requisicao.json()
 
-
+# importando as informações com pandas
 tabela = pd.DataFrame(informacoes["value"])
 tabela["Valor"] = tabela["Valor"].map("R${:,.2f}".format)
 
-
 # pegar todas as informacoes com várias requisiçoes
-
 tabela_final = pd.DataFrame()
 pular_indice = 0
 
@@ -28,3 +26,4 @@ while True:
     pular_indice += 10000
 
 print(tabela_final)
+tabela_final.to_csv("dados.csv", index=False)
